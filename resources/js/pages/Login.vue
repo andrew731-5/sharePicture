@@ -56,11 +56,28 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log(this.loginForm);
+    // ログインメソッド
+    async login() {
+      // authストアのloginアクションを呼び出す
+      await this.$store.dispatch("auth/login", this.loginForm);
+
+      if (this.apiStatus) {
+        // トップページに移動する
+        this.$router.push("/");
+      }
     },
-    register() {
-      console.log(this.registerForm);
+    //　会員登録メソッド
+    async register() {
+      // authストアのresigterアクションを呼び出す
+      await this.$store.dispatch("auth/register", this.registerForm);
+
+      // トップページに移動する
+      this.$router.push("/");
+    }
+  },
+  computed: {
+    apiStatus() {
+      return this.$store.state.auth.apiStatus;
     }
   }
 };
